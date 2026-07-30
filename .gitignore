@@ -1,0 +1,42 @@
+# ==========================================================================
+# blog_public は「公開確定記事だけ」を置く公開リポジトリ。
+# 母艦 (private の ~/dev/blog) の内部資産が万一混入しても push されないよう、
+# denylist で二重に防御する。articles/ と images/ の公開物だけを許可する運用。
+# ==========================================================================
+
+# 母艦の内部資産 (絶対に公開しない)
+private/
+tools/
+adr/
+review/
+content/
+ARTICLE-CATALOG.md
+PLAN.md
+INDEX.md
+TOC.md
+SERIES-MAP.md
+SERIES-INDEX.md
+claims/
+**/claims/
+
+# 秘密・生データ
+.env
+.env.*
+*.snagx
+*.pem
+*.key
+*.p12
+*.p8
+id_ed25519*
+id_rsa*
+credentials
+**/secret*
+**/*-raw/
+assets/raw/
+
+# 実行環境
+node_modules/
+.next/
+.DS_Store
+*.log
+*.tmp
