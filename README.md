@@ -21,7 +21,7 @@ blog_public/
 
 ## Zenn 連携
 
-Zenn は本リポジトリの `articles/*.md` を公開対象として読みます。したがって `articles/` に入れてよいのは、著者 (上原正義) が公開承認した記事のみです。
+Zenn は本リポジトリの `articles/*.md` を公開対象として読みます。したがって `articles/` に入れてよいのは、著者 (上原正吉) が公開承認した記事のみです。
 
 ## 運用フロー
 
@@ -29,4 +29,4 @@ Zenn は本リポジトリの `articles/*.md` を公開対象として読みま�
 2. exporter が approved 記事を Zenn 形式へ整形し、本リポの `articles/` へ出力
 3. `git push` で Zenn / 自社サイトへ反映
 
-著者・公開責任: 上原正義 (EarthLinkNetwork)。発掘・草稿・レビューには Claude Code と Codex を使用し、内容確認と公開判断は著者が行っています。
+著者・公開責任: 上原正吉 (EarthLinkNetwork)。発掘・草稿・レビューには Claude Code と Codex を使用し、内容確認と公開判断は著者が行っています。
