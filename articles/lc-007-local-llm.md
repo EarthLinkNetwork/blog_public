@@ -1,10 +1,12 @@
 ---
 title: "AI開発の半分をローカルLLMへ。大きいモデルを選ばず、役割で振り分けた話"
-emoji: "📝"
+emoji: "🧠"
 type: "tech"
 topics: ["claudecode", "ai", "llm", "localllm", "個人開発"]
 published: true
 ---
+
+![AI開発の半分をローカルLLMへ。大きいモデルを選ばず、役割で振り分けた話](/images/lc-007/hero-ogp.png)
 
 上原正吉（EarthLink Network Co., Ltd.）。Claude Codeを開発の主体に据え、20を超えるプロダクトを1人で同時に開発・運用しています。これは、その現場の実測記です。
 
