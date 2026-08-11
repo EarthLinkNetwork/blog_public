@@ -1,6 +1,6 @@
 ---
 title: "AI開発の半分をローカルLLMへ。大きいモデルを選ばず、役割で振り分けた話"
-emoji: "🧠"
+emoji: "⚖️"
 type: "tech"
 topics: ["claudecode", "ai", "llm", "localllm", "個人開発"]
 published: true
