@@ -14,13 +14,15 @@ published: true
 
 # AIの「完了しました」は当てにならない — 誤完了を証拠で止める品質ゲート
 
+![AIの「完了しました」は当てにならない — 誤完了を証拠で止める品質ゲート](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-004/hero-ogp.png)
+
 2026 年 6 月 29 日、あるモバイルアプリが「PC 版とのパリティ第 1 弾完了、162 テスト green」と報告されました。実機 (TestFlight) で触ると、主要動線がことごとく壊れていました。SafeArea 未対応でノッチに食い込み、チャットは送信即 failed、設定画面は 404、ナレッジのアップロードは failed。162 テストが緑で、実機で動いた主要動線は 0。この記事は、AI にコードを書かせると能力より先にぶつかる「完了しました」の虚偽報告を、複数プロダクトの実例で解剖し、そこから機械強制の品質ゲートに落とし込むまでの記録です。
 
 ## 誤完了の典型: 「テストが通る」を「動く」と偽る
 
 162 対 0 の根本原因は 1 つに尽きました。**すべてをモックしたユニットテストの green を、「動くアプリ」の証拠にして報告した**ことです。ふりかえり文書で 7 つの根本原因をコード証拠つきで並べたのですが、要点はこうです。API の baseURL が配線されていない。認証の結線は「future step」というコメントで先送りされている。そして実機操作はゼロ。つまりテストは「自分が書いたモックが自分の期待通りに動く」ことしか確認しておらず、外界とつながっていなかった。ここから「テストが通る ≠ 機能が動く」を合言葉にし、完了ゲートの skill を新設しました。
 
-![promptflow モバイルの CI 実行結果。ユニットテストは 162 件すべて green（画面は再構成・匿名、数値は実測）。この緑の裏で、実機の主要動線は 1 つも動いていませんでした](../assets/SERIES-004/ci-162-green.png)
+![promptflow モバイルの CI 実行結果。ユニットテストは 162 件すべて green（画面は再構成・匿名、数値は実測）。この緑の裏で、実機の主要動線は 1 つも動いていませんでした](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-004/ci-162-green.png)
 
 ## 別の顔: 「実装した」と「本番で動いている」も別物
 
@@ -37,7 +39,7 @@ def test_fallback_dependency_is_packaged():
     assert importlib.util.find_spec("json_repair") is not None
 ```
 
-![監視ダッシュボードに積み上がった `ModuleNotFoundError: No module named 'json_repair'`。フォールバックのコードは書かれていたのに、本番イメージに依存が入っておらず dead code のまま、エラーイベントが 1 万件を超えて記録され続けていました（画面は再構成・匿名、数値は実測）](../assets/SERIES-004/dead-code-sentry.png)
+![監視ダッシュボードに積み上がった `ModuleNotFoundError: No module named 'json_repair'`。フォールバックのコードは書かれていたのに、本番イメージに依存が入っておらず dead code のまま、エラーイベントが 1 万件を超えて記録され続けていました（画面は再構成・匿名、数値は実測）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-004/dead-code-sentry.png)
 
 ## 幻覚報告: 空のブランチで「1 行追加しました」
 
@@ -71,7 +73,7 @@ def test_fallback_dependency_is_packaged():
 
 最後に、完了の分母から「デプロイ」が抜けると何が起きるかの、はっきりした例があります。自動運転中の本番アカウント群で、配布しているプラグインが 12 日間も古い版のまま凍結していたのに、品質ゲートは全 green で、誰も気づかなかったのです。5 つの構造穴のうち核心は、**「リポジトリ内 100%」と「本番反映済み」を同一視していた**こと、そして検出層が push 型のフックしか無かったことでした。git のコミット時に走るフックは、git の外の状態 (どの版が実際に配布先で動いているか) を構造的に観測できません。対策は、配布先で cron が「インストール済みの版」と「配布すべき版」を突き合わせる**pull 型のパリティチェック**を持つこと。「配布のズレの検出は pull 型の定期突合だけ」という原則を、ここで文書に昇格させました。
 
-![配布先で走らせる pull 型のパリティチェック。インストール済みの版と配布すべき版を突き合わせ、12 日分のズレを検出しています。この間、品質ゲートはずっと全部 green のままでした（画面は再構成・匿名、期間は実測）](../assets/SERIES-004/parity-drift.png)
+![配布先で走らせる pull 型のパリティチェック。インストール済みの版と配布すべき版を突き合わせ、12 日分のズレを検出しています。この間、品質ゲートはずっと全部 green のままでした（画面は再構成・匿名、期間は実測）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-004/parity-drift.png)
 
 ## まとめ — 転用できる教訓
 
