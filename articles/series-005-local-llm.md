@@ -2,14 +2,19 @@
 title: "24時間のAI開発でクラウド課金が増え続ける —— 判断と実装を自前のローカルLLMに移してコストを下げた"
 emoji: "📝"
 type: "tech"
-topics: ["claudecode", "ai", "llm", "localllm", "dgxspark"]
+topics: ["claudecode","ai","llm","localllm","dgxspark"]
 published: true
 ---
 
-![24時間のAI開発でクラウド課金が増え続ける —— 判断と実装を自前のローカルLLMに移してコストを下げた](/images/series-005/hero-ogp.png)
+<!-- このファイルは gen-publish.mjs が生成した発行用スケルトン。翻訳(海外媒体)は Claude が en.md 経由で行う。 -->
 
 上原正吉（EarthLink Network Co., Ltd.）。Claude Codeを開発の主体に据え、20を超えるプロダクトを1人で同時に開発・運用しています。これは、その現場の実測記です。
 
+<!-- TODO(Claude): この zenn 版は媒体トーン定義（/docs/platform-tone）に合わせてトーン・長さを調整する。方向性: 技術・実装重視。設計判断と数字を厚く。開発者向け。 以下は基となる本文。調整後にこのコメントを消す。 -->
+
+# 24 時間の AI 開発でクラウド課金が増え続ける —— 判断と実装を自前のローカル LLM に移してコストを下げた
+
+![24 時間の AI 開発でクラウド課金が増え続ける —— 判断と実装を自前のローカル LLM に移してコストを下げた](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-005/hero-ogp.png)
 
 2026 年 6 月末から 7 月にかけて、開発の実行基盤を自前のローカル大規模言語モデル(LLM)に組み替えました。きっかけはコストです。
 
@@ -62,7 +67,7 @@ AI に開発を任せるほど、タスクの振り分け判断も、実際の�
 
 2026-07-10、DGX Spark が稼働開始。`ssh dgx` した最初のセッションがこれです。
 
-![DGX Spark に初 ssh したときのバナー（実端末画面・ホスト名/IP のみ匿名化）](/images/series-005/dgx-spark-first-ssh.png)
+![DGX Spark に初 ssh したときのバナー（実端末画面・ホスト名/IP のみ匿名化）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-005/dgx-spark-first-ssh.png)
 
 *GNU/Linux 6.17 の aarch64、ストレージ 3.67TB。届いた日から、モデル選定のベンチを回し始めていた*
 
@@ -99,7 +104,7 @@ DGX のメモリは 121GiB。72B クラスも余裕で載ります。当然「�
 
 これを管理画面で見ると、こうなります。
 
-![local-commander の実行レーン画面](/images/series-005/execution-lanes.png)
+![local-commander の実行レーン画面](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-005/execution-lanes.png)
 
 *実行レーン: クラウド (Claude) は待機、分類 14B は Mac 4 台が全機 busy、作業 72B (DGX) も待機。振り分けの判断だけが絶え間なく動いている*
 
@@ -109,7 +114,7 @@ DGX のメモリは 121GiB。72B クラスも余裕で載ります。当然「�
 
 構成が形になると、開発タスクは受信箱(INBOX)に流れ込み、振り分けられ、各レーンで実行され、PR(プルリクエスト)になって複数のレビューゲートを通り、人間の承認を待つ。この流れが 24 時間回り始めます。
 
-![INBOX とプロダクト別キュー、直近 24H の INSIGHTS](/images/series-005/inbox-insights.png)
+![INBOX とプロダクト別キュー、直近 24H の INSIGHTS](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-005/inbox-insights.png)
 
 *ある日の実行状況: 判断待ちが積み上がり、複数プロダクト分のキューが並ぶ。直近 24 時間で 237 万トークン・ジョブ 102 件・参考換算で約 $15.76*
 
