@@ -12,11 +12,13 @@ published: true
 
 # GitHub Actionsのコストを見て、自宅にCI・セキュリティ基盤を建てた
 
+![GitHub Actionsのコストを見て、自宅にCI・セキュリティ基盤を建てた](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-003/hero-ogp.png)
+
 2026 年 6 月下旬、組織の GitHub Actions が課金の上限で止まりました。PR(プルリクエスト)の CI(継続的インテグレーション。変更のたびに自動でテストを回す仕組み)チェックは毎回 2 秒で FAILURE、ログは空。同じころ、プラグインのリリース通知も Slack に届かなくなっていました。コードは 1 行も悪くありません。外部サービスが、課金を理由にある日インフラを止めたのです。
 
 当時 GitHub Actions は無料枠で回していました。ところが無料枠の上限に当たって CI がブロックされ、開発を続けるには従量（無料枠を超えた分の課金）を払うしかなくなりました。「無料」はここで終わりです。以降はどう転んでもお金が出ていく前提になった——ここが出発点です。だから問いは「テストを減らして安くするか」ではなく、「このまま GitHub に払い続けるのと、自前で基盤を作るのと、どちらが得か」でした。GitHub 側は従量課金なので、テストは毎コミットで走り、product が増え開発が活発になるほど毎月の額が増えていきます。一方、自宅の CI サーバー（ci1/ci2 級、約 14 万円）は一度きりの出費に電気代が乗るだけで、使っても増えません。増え続ける費用と、増えない一度きりの費用——この構造の違いが決め手でした。実際、CI の 1 回あたりの時間はコードが増えるほど伸びます。実測でも、ある product の GitHub Actions 実行時間は今年 3 月の平均 1 分台から 8 月には平均約 16 分・最長 1 時間超まで伸びていました。アクティブに動かしている product 群のコミットは月およそ 2,400 件。この量と伸び方を GitHub の従量(Linux $0.008/分)で払い続けると、無料枠を超えた分だけで月 $150〜200 規模になり、テストが伸びるほど毎月膨らみます。約 14 万円の自宅 CI サーバーなら半年かからず追い越し、以後はずっと安い(コミット数と実行時間は実測、月額は無料枠と平均分数からの見積り)。しかも、これから入れたいセキュリティ検査ツール(DefectDojo など)にも、動かす場所が要ります。ならば、テストもセキュリティ検査も監視も、自宅に 1 つのインフラ基盤を建てて全部そこで回すのが一番いい。そう判断して動いた記録です。当時の記録では、この基盤の monorepo(複数のリポジトリを 1 つに束ねた構成)は初コミットから約 1 か月で 330 コミット・ADR 35 本まで育ちました。
 
-![実機の ci1 / ci2。MINISFORUM UM880 Plus（AMD Ryzen 7 8845HS・32GB・各 ¥135,799）を 2 台。GitHub の従量を払い続ける代わりに、この 2 台で CI・セキュリティ検査・監視を回した](../assets/SERIES-003/ci1-ci2-servers.jpg)
+![実機の ci1 / ci2。MINISFORUM UM880 Plus（AMD Ryzen 7 8845HS・32GB・各 ¥135,799）を 2 台。GitHub の従量を払い続ける代わりに、この 2 台で CI・セキュリティ検査・監視を回した](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-003/ci1-ci2-servers.jpg)
 
 結論を先に置きます(本文の読了は約 11 分)。
 
@@ -39,7 +41,7 @@ curl -s -o /dev/null -w "%{http_code}\n" -X POST "$SLACK_WEBHOOK" \
 
 webhook は 200。ローカルの通知スクリプトも正常。つまり通知ロジックは無罪でした。次に CI 側を `gh run view` で覗くと、全 run が 2 秒・空ログで終わっている。ここで像が結びます。**ランナーそのものが起動していない**。原因は GitHub Actions の課金ブロックで、組織の GitHub Actions が丸ごと止まっていました。どの run も、動き出す前に一瞬（2 秒）で失敗し、ログには何も残らない——この挙動そのものが、いま思えば課金ブロックの目印でした。そして厄介なのは、止まった仕組みが無音だったこと。Slack 通知という「異常を知らせる仕組み」自体が Actions 依存で沈黙していたため、気づくまでに数日かかりました。
 
-![gh run view で見ると、どの run も一瞬（2 秒）で失敗しログが空。ランナーが起動せず、課金ブロックで組織の GitHub Actions が無音で止まっていた（実端末の再構成・ホスト名/ID は匿名）](../assets/SERIES-003/gh-run-fail.png)
+![gh run view で見ると、どの run も一瞬（2 秒）で失敗しログが空。ランナーが起動せず、課金ブロックで組織の GitHub Actions が無音で止まっていた（実端末の再構成・ホスト名/ID は匿名）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-003/gh-run-fail.png)
 
 ## 転換: hosted に依存しない CI を「コードで」建てる
 
@@ -87,7 +89,7 @@ gitleaks detect --source . --redact \
 
 最後に、CI 状態・デプロイ昇格・複数プロバイダのコスト・バックアップ充足・サーバとローカル LLM(大規模言語モデル)の死活を 1 画面に集約する自作ポータル(Infra Portal と呼んでいます)を育てました。設計思想は 2 つあります。ひとつは「登録情報を信じず、リポジトリとライブ環境の実測で capability を自動検出する」。もうひとつは「HTTP 200 で生きていることにせず、実応答の意味を見る」。前者は自己申告のズレを、後者は「サーバは応答するが中身は壊れている」を捕まえるためです。ここでも笑える障害があり、あるノードのカードが 62 時間前で凍結していたのは、HA の非対称インストール——passive 側に必要なレポート用スクリプトを入れ忘れていた——が原因でした。両ノードを対称化して直しました。
 
-![自宅CI基盤の Infra Portal。HA の2ノード(ci1 active / ci2 standby)と、1基盤に集約したCIランナー・セキュリティ検査・監視。ノード名は伏せた再構成、HAの実測値は検証済み](../assets/SERIES-003/infra-portal.png)
+![自宅CI基盤の Infra Portal。HA の2ノード(ci1 active / ci2 standby)と、1基盤に集約したCIランナー・セキュリティ検査・監視。ノード名は伏せた再構成、HAの実測値は検証済み](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-003/infra-portal.png)
 
 ## まとめ — 転用できる教訓
 
