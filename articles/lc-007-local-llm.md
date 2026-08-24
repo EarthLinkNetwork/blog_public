@@ -1,18 +1,24 @@
 ---
 title: "AI開発の半分をローカルLLMへ。大きいモデルを選ばず、役割で振り分けた話"
-emoji: "⚖️"
+emoji: "📝"
 type: "tech"
-topics: ["claudecode", "ai", "llm", "localllm", "個人開発"]
+topics: ["claudecode","ai","llm","localllm","個人開発"]
 published: true
 ---
 
-![AI開発の半分をローカルLLMへ。大きいモデルを選ばず、役割で振り分けた話](/images/lc-007/hero-ogp.png)
+<!-- このファイルは gen-publish.mjs が生成した発行用スケルトン。翻訳(海外媒体)は Claude が en.md 経由で行う。 -->
 
 上原正吉（EarthLink Network Co., Ltd.）。Claude Codeを開発の主体に据え、20を超えるプロダクトを1人で同時に開発・運用しています。これは、その現場の実測記です。
 
+<!-- TODO(Claude): この zenn 版は媒体トーン定義（/docs/platform-tone）に合わせてトーン・長さを調整する。方向性: 技術・実装重視。設計判断と数字を厚く。開発者向け。 以下は基となる本文。調整後にこのコメントを消す。 -->
+
+# AI開発の半分をローカルLLMへ。大きいモデルを選ばず、役割で振り分けた話
+
+![AI開発の半分をローカルLLMへ。大きいモデルを選ばず、役割で振り分けた話](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/lc-007/hero-ogp.png)
+
 2026年7月30日、社内のAI開発を動かしている統制盤で、ローカルLLMの処理比率が50.3%、クラウド側が48.2%になりました。
 
-![ローカルLLMとクラウドの処理比率。絶対利用量とアカウント情報は除去済み](/images/lc-007/local-cloud-share-2026-07-30-redacted.png)
+![ローカルLLMとクラウドの処理比率。絶対利用量とアカウント情報は除去済み](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/lc-007/local-cloud-share-2026-07-30-redacted.png)
 
 これは「請求額が正確に半分になった」という意味ではありません。transcriptを含む実行量の分担が、ほぼ半分ずつになったという観測です。それでも、開発タスクのすべてを高性能なクラウドモデルへ送っていた状態から考えると、大きな変化でした。
 
@@ -96,7 +102,7 @@ Local Commanderは、開発タスクを受け取り、分類し、必要ならCl
 
 現在目指しているのは、モデルの順位表ではなく、タスク種別ごとの役割分担です。
 
-![ルーティングと効率の設計モック。画像内の数値はすべてダミー](/images/lc-007/routing-efficiency-cockpit-mock.png)
+![ルーティングと効率の設計モック。画像内の数値はすべてダミー](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/lc-007/routing-efficiency-cockpit-mock.png)
 
 画像は、タスク種別ごとに成功率、コスト、時間を比較し、最適な実行者を選ぶための設計モックです。数値はダミーですが、考え方は実運用と同じです。
 
