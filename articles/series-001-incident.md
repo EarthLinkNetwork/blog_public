@@ -2,12 +2,19 @@
 title: "使っていたLLMモデルが廃止され、生成機能が止まった — 2つのプロダクトの原因と再発防止"
 emoji: "📝"
 type: "tech"
-topics: ["ai", "llm", "生成ai"]
+topics: ["ai","llm","生成ai"]
 published: true
 ---
 
+<!-- このファイルは gen-publish.mjs が生成した発行用スケルトン。翻訳(海外媒体)は Claude が en.md 経由で行う。 -->
+
 上原正吉（EarthLink Network Co., Ltd.）。Claude Codeを開発の主体に据え、20を超えるプロダクトを1人で同時に開発・運用しています。これは、その現場の実測記です。
+
+<!-- TODO(Claude): この zenn 版は媒体トーン定義（/docs/platform-tone）に合わせてトーン・長さを調整する。方向性: 技術・実装重視。設計判断と数字を厚く。開発者向け。 以下は基となる本文。調整後にこのコメントを消す。 -->
+
 # 使っていたLLMモデルが廃止され、生成機能が止まった — 2つのプロダクトの原因と再発防止
+
+![使っていたLLMモデルが廃止され、生成機能が止まった — 2つのプロダクトの原因と再発防止](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-001/hero-ogp.png)
 
 2026 年 7 月 10 日の朝、マルチ LLM(大規模言語モデル)ワークフローの SaaS(サービスとして提供されるソフトウェア)、promptflow のデザイン生成機能が全滅しました。原因はこちらのコードではありません。Google が `gemini-2.5` 系のモデルを事前告知なしで即日廃止したためです。そしてこの「モデルが消える」事故は初めてではありませんでした。同じ月の 7 月 5 日には画像生成の `dall-e-3` が OpenAI の API(外部から機能を呼び出す窓口)から消え、その 1 ヶ月前の 6 月 3 日には、ニュースキュレーション基盤の curation で `gemini-2.0-flash-lite` の廃止対応に追われたばかりだったのです。
 
