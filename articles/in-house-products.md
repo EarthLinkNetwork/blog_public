@@ -39,9 +39,9 @@ published: true
 - **notify** — メール・Slack・LINE・Webhook をまとめて扱う共通の通知基盤です。各プロダクトが通知を自前で実装せずに済むよう切り出しました。送信先に優先順位をつけ、先頭が失敗したら次へ自動で切り替えるフォールバックや、同じ送信を二重に飛ばさない冪等キー付き API（同じ鍵の再送は安全に無視する仕組み）を備えています。
 - **dotvault** — `.env`・`.npmrc`・kubeconfig・証明書などの秘密情報を、`dotvault pull` の1コマンドで各自の PC や CI に配れる、自作の secret 配布 SaaS です。利用者は AWS アカウントを持たなくてよく、Doppler や Infisical の自作版という位置づけです。5月末に仕様書から書き始め、6月の1か月で組織・権限・監査ログ・課金までを127コミットで組み上げました。
 
-  ![dotvault の管理コンソール。Projects・Service Tokens・Members・Audit Log などをこの1画面から辿れます。CI では `npx @earthlink/dotvault pull <project>` の1コマンドで .env を配布します（メールアドレスは除去済み）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/dotvault-admin-home.png)
+  ![dotvault の管理コンソール。Projects・Service Tokens・Members・Audit Log などをこの1画面から辿れます。CI では `npx @earthlink/dotvault pull <project>` の1コマンドで .env を配布します（メールアドレスは除去済み）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/dotvault-admin-home.png)
 
-  ![dotvault の環境変数管理。development / staging / production と共通レイヤ（_shared）を切り替え、鍵ごとに監査ログが残ります。値は AWS KMS で暗号化しています（デモ用プロジェクト・メールアドレスは除去済み）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/dotvault-project-keys.png)
+  ![dotvault の環境変数管理。development / staging / production と共通レイヤ（_shared）を切り替え、鍵ごとに監査ログが残ります。値は AWS KMS で暗号化しています（デモ用プロジェクト・メールアドレスは除去済み）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/dotvault-project-keys.png)
 - **billing** — 複数の自社 SaaS の課金を1か所に集約する基盤です。Stripe（決済サービス）を包み、契約・クーポン・都度課金を API 一本で扱い、決済や解約が起きると署名付きの Webhook（サーバー間の自動通知）で各サービスへ知らせます。5xx で失敗した通知は1秒→5秒→15秒で最大3回まで自動で送り直します。
 
 ## サイト・集客をつくる
@@ -55,7 +55,7 @@ published: true
 - **sage（usesources）** — project を軸に、wiki・タスクボード・専用チャット・横断検索・AI エージェントを1つにまとめたワークスペースです。project を作るとページ・ボード・チャットが同時にでき、メンバーを外すと配下の権限が一括で失効します。当初は複数 SaaS を横断検索する RAG 検索でしたが、タスク管理＋チャット統合へ舵を切りました。
 - **promptflow（Prompt Flow Studio）** — OpenAI・Anthropic・Google の複数 AI を1画面で扱い、チャット・比較・討論・ワークフローの4モードで動かせる SaaS です。同じ問いを複数モデルに並べて比較・討論させ、生成物はバージョン管理します。自社プロダクトの中でも開発規模は最大級で、iOS 版も並行して作っています。
 
-  ![promptflow の Debate モード（iOS 版）。同じ問い（タブとスペースのどちらが優れているか）を GPT-5.4 と Claude Sonnet 4.6 に並べて討論させています。チャット・比較・討論・ワークフローの4モードを1つのアプリで扱います](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/promptflow-debate.png)
+  ![promptflow の Debate モード（iOS 版）。同じ問い（タブとスペースのどちらが優れているか）を GPT-5.4 と Claude Sonnet 4.6 に並べて討論させています。チャット・比較・討論・ワークフローの4モードを1つのアプリで扱います](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/promptflow-debate.png)
 - **local-commander** — クラウドではなく手元のローカル LLM を判断役に据える、AI 開発オーケストレーターです。タスクを投げるとローカル LLM が「ローカルで済む／クラウドが要る／承認必須」などに仕分け、必要なときだけ人の承認を挟んで Codex や Claude Code に実装を回し、push・PR・レビュー・merge・タスク反映まで自動化します。専用マシン（DGX Spark）の購入も勘ではなく、16ケースのベンチマーク実測で判断しました。
 - **claude-plugins（ELN workflow）** — 全プロジェクトに同じ仕様プロセス・品質基準・運用規律を Claude Code 経由で配る、自社の私設プラグイン基盤です。「守ってください」という文書ではなく、守らないと先に進めない skill として実装しているのが肝で、実観測（ログ・DB・テスト出力）がない限り「完了」と言わせません。このブログの作り方そのものでもあります。
 
@@ -63,15 +63,15 @@ published: true
 
 - **alive365** — 複数地点からの死活監視・障害管理・ステータスページ・ブラウザ操作チェックを1つにした稼働監視 SaaS です。「監視する側にこそ固定費がかかる」という発想から、HTTP チェックは常駐しない構成にし、ブラウザチェックだけ都度起動にして固定費ゼロを狙い、実際に月58〜66 ドルかかっていた常時課金の回線装置を全廃しています。
 
-  ![alive365 の監視ダッシュボード（製品名 PulseGuard）。監視対象の稼働状況・インシデント・平均稼働率・リージョン別 P95 応答を1画面にまとめています（画面はデモデータ）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/alive365-pulseguard.png)
+  ![alive365 の監視ダッシュボード（製品名 PulseGuard）。監視対象の稼働状況・インシデント・平均稼働率・リージョン別 P95 応答を1画面にまとめています（画面はデモデータ）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/alive365-pulseguard.png)
 - **eln-infra-ops** — SSH で手打ちする運用をやめ、自宅の CI サーバー群（数台＋専用マシン）をコードから何台でも再現できるようにした社内インフラ基盤です。合格の判定を設計書ではなく、実機の kill-test（1台を実際に落として、全サービスが残った台で無停止に生き残るか）に置いているのが特徴です。2台が同時に主になってしまう事故を実際に起こし、同日中に対策を入れて切り替え18秒まで詰めました。
 
-  ![eln-infra-ops の Infra Portal（概要）。自宅 CI サーバー群のランナー（19/19 稼働・CI の詰まりなし）と、ローカル LLM 群を1画面で見ています。専用マシン DGX Spark が qwen3-coder を GPU 使用率 91% で実行中です](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/infra-portal-fleet.png)
+  ![eln-infra-ops の Infra Portal（概要）。自宅 CI サーバー群のランナー（19/19 稼働・CI の詰まりなし）と、ローカル LLM 群を1画面で見ています。専用マシン DGX Spark が qwen3-coder を GPU 使用率 91% で実行中です](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/infra-portal-fleet.png)
 - **kale** — AWS・GCP・Azure・OpenAI のコストを1画面で把握し、予算超過や異常を Slack / Teams に知らせるマルチクラウドのコスト管理基盤です。プロバイダの追加は設定登録だけで済み、GCP と OpenAI を1日で足しました。kale 自身を使って、Claude Code のエージェントが毎時の異常検知と日次レポートで、全プロダクトのコストを見張っています。
 
-  ![kale のクラウド料金ダッシュボード。総コスト・予算消化率・コスト異常・最適化余地を横断で1画面に集約します（画面はデモデータ）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/kale-dashboard.png)
+  ![kale のクラウド料金ダッシュボード。総コスト・予算消化率・コスト異常・最適化余地を横断で1画面に集約します（画面はデモデータ）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/kale-dashboard.png)
 
-  ![kale のコスト最適化提案。リザーブドインスタンス化や S3・RDS の見直しなど、削減額つきの改善案を自動で並べます（画面はデモデータ・プレビュー機能）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/kale-cost-optim.png)
+  ![kale のコスト最適化提案。リザーブドインスタンス化や S3・RDS の見直しなど、削減額つきの改善案を自動で並べます（画面はデモデータ・プレビュー機能）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/kale-cost-optim.png)
 
 ## お客様を支える
 
@@ -82,9 +82,9 @@ published: true
 
 - **tessvia** — 1つのシナリオ正本から「チュートリアル再生・操作マニュアル生成・E2E テスト・生存監視」の4つを導く基盤です。もとは「自然言語から E2E テストを作る道具」と「社内チュートリアル配信の道具」の別プロジェクトでしたが、色の指定まで一致するほど同じ設計を独立に二度作っていたと分かり、1つに統合しました。マニュアル生成はクラウドではなく手元の `claude -p` に投げる構成です。
 
-  ![tessvia のシナリオ編集画面。1つのシナリオ正本（ステップ列）から Test・Manual・Tutorial の3つを導きます。左は「prompt flow」プロジェクトのシナリオ一覧です（メールアドレスは除去済み）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/tessvia-scenario.png)
+  ![tessvia のシナリオ編集画面。1つのシナリオ正本（ステップ列）から Test・Manual・Tutorial の3つを導きます。左は「prompt flow」プロジェクトのシナリオ一覧です（メールアドレスは除去済み）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/tessvia-scenario.png)
 
-  ![tessvia のバグ管理。テスト実行で捕捉した不具合に、最新スクリーンショットと再発確認（regression）を紐付けて追跡します（メールアドレスは除去済み）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/shots/tessvia-bugs.png)
+  ![tessvia のバグ管理。テスト実行で捕捉した不具合に、最新スクリーンショットと再発確認（regression）を紐付けて追跡します（メールアドレスは除去済み）](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/tessvia-bugs.png)
 
 ## この一覧の読み方と、これから
 
