@@ -10,6 +10,8 @@ published: true
 
 # EarthLink Network が自社でつくっている18のプロダクト
 
+![EarthLink Network が自社でつくっている18のプロダクト](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/about-001/hero-ogp.png)
+
 先に、この記事で分かることを置きます（読了は約 7 分）。
 
 - **自社で動かしている18のプロダクトの全体像**。土台・集客・実行・監視・支援・検証の6領域に分け、それぞれが何を解いているかを1つずつ説明します。
@@ -94,4 +96,4 @@ published: true
 
 上原正吉。EarthLink Network Co., Ltd. でAI開発をしています。2025年からClaude Codeを開発の主体に据え、今は20を超えるプロダクトを1人で同時に開発・運用しています。この連載では、その現場で実際に起きたこと（うまくいったことも、失敗も）を、数字と一緒に書いていきます。
 
-また、AIで業務や開発を組み替えたい会社・チーム向けに、AI活用のコンサルティングも受け付けています。ご相談は www.eln.ne.jp からどうぞ。
+また、AIで業務や開発を組み替えたい会社・チーム向けに、AI活用のコンサルティングも受け付けています。ご相談は [www.eln.ne.jp](https://www.eln.ne.jp) からどうぞ。
