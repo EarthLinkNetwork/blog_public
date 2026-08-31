@@ -1,5 +1,5 @@
 ---
-title: "AWS Amplifyで繰り返した4つの失敗 — env全置換・ビルドは通るのに実行時500・無音の障害・ドメイン移行"
+title: "AWS Amplifyで繰り返した4つの失敗 — ビルドが通っても本番で動くとは限らない"
 emoji: "🔥"
 type: "tech"
 topics: ["aws", "amplify", "cicd", "devops", "troubleshooting"]
@@ -12,9 +12,9 @@ published: true
 
 <!-- TODO(Claude): この zenn 版は媒体トーン定義（/docs/platform-tone）に合わせてトーン・長さを調整する。方向性: 技術・実装重視。設計判断と数字を厚く。開発者向け。 以下は基となる本文。調整後にこのコメントを消す。 -->
 
-# AWS Amplifyで繰り返した4つの失敗 — env全置換・ビルドは通るのに実行時500・無音の障害・ドメイン移行
+# AWS Amplifyで繰り返した4つの失敗 — ビルドが通っても本番で動くとは限らない
 
-![AWS Amplifyで繰り返した4つの失敗 — env全置換・ビルドは通るのに実行時500・無音の障害・ドメイン移行](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-006/hero-ogp.png)
+![AWS Amplifyで繰り返した4つの失敗 — ビルドが通っても本番で動くとは限らない](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/series-006/hero-ogp.png)
 
 2026 年の 4 月から 7 月にかけて、私は複数の Next.js プロダクトを AWS Amplify Hosting に載せて運用しました。その過程で繰り返した「Amplify 固有の失敗」を、この記事では 4 系統に整理します。env が消える、ビルドは通るのに実行時に落ちる、失敗が無音のまま進む、そしてドメイン移行で CloudFront の古い割り当てが残ってつまずく——複数のプロダクトを Amplify で運用する中で繰り返したので、再現条件と防ぎ方をまとめておきます。
 
