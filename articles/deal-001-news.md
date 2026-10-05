@@ -1,5 +1,5 @@
 ---
-title: "Claude Code の cloud session に最大 $250 のクレジットが付きます ── 申請期限は日本時間 10月8日 15:59"
+title: "Claude Code の cloud session に最大 $250 のクレジット ── 申請期限は10月8日 15:59（日本時間）"
 emoji: "📝"
 type: "tech"
 topics: ["claudecode", "ai", "anthropic", "github"]
