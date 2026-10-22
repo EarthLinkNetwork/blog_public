@@ -7,7 +7,7 @@ published: true
 ---
 
 <!-- このファイルは gen-publish.mjs が生成した発行用スケルトン。翻訳(海外媒体)は Claude が en.md 経由で行う。 -->
-<!-- gen-publish:src-sha256=4d2e40a0cc8b95b25cbf61e947a55d4edb0d30b3c729679c5716acc3310773ed -->
+<!-- gen-publish:src-sha256=a1bf11fefcc1f271bc5985f7896502a6e4351eb3e07599226119f64a95073351 -->
 
 上原正吉（EarthLink Network Co., Ltd.）。Claude Codeを開発の主体に据え、20を超えるプロダクトを1人で同時に開発・運用しています。これは、その現場の実測記です。
 
@@ -24,7 +24,7 @@ published: true
 
 ## 本文（読了 約9分）
 
-この記事は、secret管理サービス dotvault の開発の経緯と、どんな機能があるか、どう開発したかを綴っていくシリーズの1本目です。まず「なぜ作ったか」から話します。
+この記事は、secret管理サービス dotvault を作った経緯と、どう実装したかを書いていくシリーズの第 1 回です。まず「なぜ作ったか」から話します。
 
 ## 配ることができないのに、配らなければいけない
 
@@ -70,7 +70,7 @@ dotvaultは、秘密情報を保管するだけでなく、許可された相手
 
 そこで dotvault は、秘密の保管場所をコードリポジトリから分けました。
 
-サーバー側の正本はdotvaultに置き、KMS(Key Management Service)で暗号化して保管します。`dotvault pull`は取得した値をローカルの`.env`ファイルへ書き込むため、そのファイルをGitの追跡対象から外す運用は別に必要です。
+値はサーバー側のdotvaultに置き、KMS(Key Management Service)で暗号化して保管します。`dotvault pull`は取得した値をローカルの`.env`ファイルへ書き込むため、そのファイルをGitの追跡対象から外す運用は別に必要です。
 
 そのうえで、環境ごとに分けます。development(開発)・検証環境(検証)・本番(本番)。それに、どの環境からも参照する _shared(共通)。同じ名前の設定でも、開発用と本番用は別物です。そこを混ぜません。
 
@@ -122,10 +122,11 @@ dotvault導入前は、秘密情報を貼り付けて送り、パスワードを
 
 ---
 
-この dotvault についての記事は、開発の経緯・どんな機能があるか・どう実装したかを、順次シリーズとして公開していきます。
+このシリーズでは、dotvault を作った経緯と、どう実装したかを書いていきます。
+dotvault の使い方は、連載「dotvault の使い方」で順に書いています。第 1 回はこちらです。https://note.com/chooser/n/n726d6f76a5eb
 興味のある方は、ぜひ「いいね」と記事の購読をお願いいたします。
 
-dotvault は secret を1コマンドで配るサービスとして提供しています。詳しくは https://dotvault.io をご覧ください。
+dotvault について詳しくは https://dotvault.io をご覧ください。
 そのほかの自社プロダクトは https://www.eln.ne.jp/products にまとめています。
 
 ## 筆者について
