@@ -113,7 +113,7 @@ Personal の組織では、サイドバーに Teams と My Organizations が出�
 
 | 回 | 困りごと | 読み終えた時にできること |
 |---|---|---|
-| 2 | 新しいマシンで `.env` を探し回りたくない | install・login・init・pull / run の 4 歩で、自分の project の `.env` を取り出せる。付録に、パスワードの再設定・表示言語・logout |
+| 2 | ローカルで直した値が CI やクラウドの開発環境に反映されていない | どの環境でも `dotvault pull` の 1 回で同じ `.env` をそろえられる。install・login・init は、その場所で最初の 1 回だけ。付録に、パスワードの再設定・表示言語・logout |
 | 3 | development と production の `.env` を手で持ち分けるのをやめたい | project を作り、3 つの環境と Common を使い分け、環境どうしの差分を見て値を写せる。使い終わった project を archive して delete できる |
 | 4 | 値を間違えて上書きしてしまった | key を画面と CLI の両方から書き、取り出し、版の一覧から前の版に戻せる |
 | 5 | `.npmrc` と kubeconfig も人から人へ渡している | ファイルごと push して配り、commit の前に scan で漏れを止められる |
@@ -138,7 +138,7 @@ dotvault は 11 月に、誰でもアカウントを作って使える形で公�
 
 ## 次回
 
-2 回目は「新しいマシンで `.env` を探し回りたくない ── 一人で始める: install・login・init・pull / run」です。Personal の組織で、インストールから最初の pull まで、画面を 1 枚ずつ付けて進めます。
+2 回目は「ローカルで直した値が CI に反映されていない ── どの環境でも dotvault pull 1 回で同じ .env をそろえる」です。ローカル・CI/CD・サーバー・クラウドの開発環境で同じ値をそろえる考え方と、インストールから最初の pull までを、画面を 1 枚ずつ付けて進めます。
 
 ---
 
