@@ -3,7 +3,7 @@ title: "前の会話の一覧では、返事待ちの続きが見分けられな
 emoji: "📝"
 type: "tech"
 topics: ["claudecode", "ai-development", "developer-tools"]
-published: false
+published: true
 ---
 
 <!-- このファイルは gen-publish.mjs が生成した発行用スケルトン。翻訳(海外媒体)は Claude が en.md 経由で行う。 -->
