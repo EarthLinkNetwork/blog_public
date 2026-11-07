@@ -7,7 +7,7 @@ published: true
 ---
 
 <!-- このファイルは gen-publish.mjs が生成した発行用スケルトン。翻訳(海外媒体)は Claude が en.md 経由で行う。 -->
-<!-- gen-publish:src-sha256=ab8ee3b6aeabfe1626876a89fe483b577502070cfe866fdcb410ac8eced1badf -->
+<!-- gen-publish:src-sha256=eade83ffce452bc957892b1ef9fe490d9ba5fbbb1773183a83d8d90435864b59 -->
 
 上原正吉（EarthLink Network Co., Ltd.）。AI会社・AI社員による業務自動化と、人の逐次介入なしに24時間自動開発を回す仕組みを自社で実践しています。開発ノウハウと具体的な設定方法、運用して分かった改善点を公開しています。
 
@@ -29,22 +29,16 @@ Sentry の DSN を取り替える日には、その値を使っている project
 
 - **組織で共有する値は、project ではなく Global Keys に置きます。** 画面のサイドバーの Global Keys か、CLI の `dotvault global set` です。置いた値は「共通の値」（画面では Common、CLI では `_all`）として全環境に効き、環境ごとに別の値（上書き）を足せます。
 - **project は、bind した key だけを受け取ります。** 置いただけでは、どの project にも配られません。project の Global keys タブで Bind するか、project のディレクトリで `dotvault global use <KEY>` を実行します。受け取る時の名前は `--as`（画面では alias）で変えられます。
-- **受け取りは、いつもの `pull` と `run` です。** 追加の操作はありません。bind した key は `.env` の管理区間の先頭に並びます（並ぶ位置の話で、優先順位とは別です）。production を `pull` すると、production の上書き値が入ります。`pull` は実行したディレクトリの `.env` を書き換えるので、production を確かめる時は別のディレクトリで実行します。production に project の key が 1 つも無くても `pull` は通り、bind した key 2 つ（production の上書き値）と、project の Common (_shared) の `API_BASE_URL` の 3 key が書かれます。
-- **同じ名前の key を project が環境の値として持っていれば、project の値が勝ちます。** pool の値は（共通の値も、環境ごとの上書きも）いちばん弱い層です。受け取りをやめるのは、project の Global keys タブの Unbind か、CLI の `global drop` です。CLI の `global delete KEY` は共通の値を消し、`global delete KEY -E <env>` はその環境の上書きを消します。上書きも含めて key をまるごと消すのは、画面の Delete key です。
-- **CLI の `global` のコマンドで pool を触る時は `--org <id>` が要ります。** `global keys` と `global set` を `--org` 無しで実行すると、`ORG_CONTEXT_REQUIRED` で止まりました（終了コード 1）。1 つの org にしか入っていなくても、pool を触る `global` のコマンドは org を自動で選びません。`describe` と `delete` も `--org` を付けて実行します。project のディレクトリで実行する `global use`・`global status`・`global drop` は、`--org` 無しで動きます（どれも終了コード 0）。org の id は `dotvault whoami` に出ます。ただし、`global` を付けない素の `dotvault set` は別です。`project-config.json` の無いディレクトリで実行すると、`--org` 無しでもそのまま pool の共通の値に書かれます（終了コード 0）。project の key を `set` する時は、project のディレクトリで実行します。
+- **受け取りは、いつもの `pull` と `run` です。** 追加の操作はありません。bind した key は `.env` の管理区間（dotvault が書き込む、`# BEGIN` の行と `# END` の行の間）の先頭に並びます（並ぶ位置の話で、優先順位とは別です）。production を `pull` すると、production の上書き値が入ります。`pull` は実行したディレクトリの `.env` を書き換えるので、production を確かめる時は別のディレクトリで実行します。production に project の key が 1 つも無くても `pull` は通り、bind した key 2 つ（production の上書き値）と、project の Common (_shared) の `API_BASE_URL` の 3 key が書かれます。
+- **同じ名前の key を project が環境の値として持っていれば、project の値が勝ちます。** pool（org で共有する値の置き場で、画面の Global Keys）の値は、共通の値も環境ごとの上書きも、いちばん弱い層です。受け取りをやめるのは、project の Global keys タブの Unbind か、CLI の `global drop` です。CLI の `global delete KEY` は共通の値を消し、`global delete KEY -E <env>` はその環境の上書きを消します。上書きも含めて key をまるごと消すのは、画面の Delete key です。
+- **CLI の `global` のコマンドで poolを触る時は `--org <id>` が要ります。** `global keys` と `global set` を `--org` 無しで実行すると、`ORG_CONTEXT_REQUIRED` で止まりました（終了コード 1。終了コードはコマンドが終わる時に返す数で、0 が成功、それ以外が失敗です）。1 つの org にしか入っていなくても、pool を触る `global` のコマンドは org を自動で選びません。`describe` と `delete` も `--org` を付けて実行します。project のディレクトリで実行する `global use`・`global status`・`global drop` は、`--org` 無しで動きます（どれも終了コード 0）。org の id は `dotvault whoami` に出ます。ただし、`global` を付けない素の `dotvault set` は別です。`project-config.json` の無いディレクトリで実行すると、`--org` 無しでもそのまま pool の共通の値に書かれます（終了コード 0）。project の key を `set` する時は、project のディレクトリで実行します。
 - **bind の状態を見る場所は、project の Global keys タブと `global status` です。** project の Keys タブは project に置いた key の一覧で、bind した key は Global keys タブの BOUND AS の列に出ます。
 
 ## 本文（読了 約14分）
 
-## 前提と注意
+## 前提
 
-- **読者。** 5 回目の「.npmrc と kubeconfig を、まだ手で渡している ── ファイルごと配る push と、commit の前に止める scan」までで、`demo-app` の development に `.env`（5 key）と `.env.local`（1 key）がある状態から続けます。5 回目で push した `.npmrc` と `.kube/config` も development に残っていますが、push したファイルは key ではないので、この回の key の数には入りません。5 回目を読んでいなくても、画面の流れは追えます。
-- **環境。** 画面は、本番の app.dotvault.io と、公開されている CLI（0.15.7）で確かめました。端末は 2 回目と同じ Node 20 の Linux コンテナです。
-- **org は Personal です。** 2 回目で作った、自分 1 人の org です。権限の設定が無く、Global Keys も含めて全部の操作が最初からできます。人を招いた org（Company）での権限の見え方は、9 回目で扱います。
-- **端末の画面は再構成です。** 実行した出力を文字どおりに写し、見やすい形に組み直しています。生の出力はそのまま保存しています。別々に実行したコマンドを `cd … && …` の 1 行にまとめた所と、生の出力に [exit=N] として残した終了コードを `echo $?` の行で示した所があります。
-- **画面は英語です。** 管理コンソールの表示言語は、2 回目の付録の手順で日本語にできます。
-- **デモのアカウントです。** project 名、key の値、org の id は、この連載のために作ったデモのものです。`https://examplePublicKey@o4500000000000000.ingest.sentry.io/…` や `cf_demo_…` は、どこにもつながらないデモの値です。
-- **用語。** 「pool」は org で共有する値の置き場（画面の Global Keys）です。「共通の値」は、環境を指定せずに置いた値で、画面では Common、CLI では `_all` と出ます。「上書き」は、環境を指定して置いた値です。「bind」は、project が pool の key を受け取ると宣言することで、「alias」は受け取る時の別名です。「終了コード」は、コマンドが終わる時に返す数で、0 が成功、それ以外が失敗です。「管理区間」は、dotvault が `.env` に書き込む範囲で、`# BEGIN` の行と `# END` の行の間です。手で書いた行はその外に残ります。bind をやめることを unbind と言い、画面では Unbind、CLI では `global drop` です。
+5 回目の続きで、`demo-app` の development に `.env`（5 key）と `.env.local`（1 key）がある状態から始めます（5 回目を読んでいなくても追えます）。org は 2 回目で作った自分 1 人の Personal で、Global Keys も最初から使えます。
 
 ## 1. project の key と Global Keys の違い
 

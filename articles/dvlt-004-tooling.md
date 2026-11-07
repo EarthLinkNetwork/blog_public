@@ -7,7 +7,7 @@ published: true
 ---
 
 <!-- このファイルは gen-publish.mjs が生成した発行用スケルトン。翻訳(海外媒体)は Claude が en.md 経由で行う。 -->
-<!-- gen-publish:src-sha256=c75aa3535125a394ff0792d10b9091aad4fcd1a747d1b3a355a6b4e466cdd237 -->
+<!-- gen-publish:src-sha256=55bb0044eac7a05c200c4b4edd313d2937a36c2fdd7162dc67272e15b99b5917 -->
 
 上原正吉（EarthLink Network Co., Ltd.）。AI会社・AI社員による業務自動化と、人の逐次介入なしに24時間自動開発を回す仕組みを自社で実践しています。開発ノウハウと具体的な設定方法、運用して分かった改善点を公開しています。
 
@@ -35,14 +35,9 @@ published: true
 
 ## 本文（読了 約12分）
 
-## 前提と注意
+## 前提
 
-- **読者。** 3 回目の「development と production の .env を手で持ち分けるのをやめたい ── project と環境の作り方」で、`demo-app` に development・staging・production・preview の 4 環境と Common ができた状態から続けます。3 回目を読んでいなくても、画面の流れは追えます。
-- **環境。** 画面は、本番の app.dotvault.io と、公開されている CLI（0.15.7）で確かめました。端末は 2 回目と同じ Node 20 の Linux コンテナです。
-- **端末の画面は再構成です。** 端末に出た文字をそのまま写し、見やすい形に組み直しています。生の出力はそのまま保存しています。
-- **画面は英語です。** 管理コンソールの表示言語は、2 回目の付録の手順で日本語にできます。
-- **デモのアカウントです。** project 名、key の名前、値は、この連載のために作ったデモのものです。値はどれも、この記事のために作った見本です。
-- **用語。** この記事では、API キーやパスワードのように外に出してはいけない値をまとめて「secret」と書きます。「key」は `DATABASE_URL` のような名前、「値」はその中身、v1・v2 のような番号は値を書くたびに 1 つ増える変更の回数です。
+3 回目で `demo-app` に development・staging・production・preview の 4 環境と Common を作った状態から続けます。3 回目を読んでいなくても、画面の流れは追えます。
 
 ## 1. 画面から key を 1 つずつ書く
 
@@ -176,7 +171,7 @@ CLI では確認なしで消えます。複数の key を 1 回で消せます�
 
 ## 次回
 
-5 回目は「.npmrc と kubeconfig を、まだ手で渡している ── ファイルごと配る push と、commit の前に止める scan」です。key と値に分かれないファイルをそのまま配る `dotvault push` と、コミットする前に secret の混入を見つける `dotvault scan` を、画面と一緒に進めます。
+5 回目は「.npmrc と kubeconfig を、まだ手で渡している ── ファイルごと配る push と、commit の前に止める scan」です。key と値に分かれないファイルをそのまま配る `dotvault push` と、コミットする前に secret（API キーやパスワードのように外に出してはいけない値）の混入を見つける `dotvault scan` を、画面と一緒に進めます。
 
 ---
 
