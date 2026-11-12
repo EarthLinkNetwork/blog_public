@@ -7,7 +7,7 @@ published: true
 ---
 
 <!-- このファイルは gen-publish.mjs が生成した発行用スケルトン。翻訳(海外媒体)は Claude が en.md 経由で行う。 -->
-<!-- gen-publish:src-sha256=2c44d85cf672fa3c39cbece02145c4e963b7220b50f536511e1994283f1cc2c6 -->
+<!-- gen-publish:src-sha256=b32a96d8ce62db112046a6b733ae5cc3762796d61b6af0e483b1da94b430bc95 -->
 
 上原正吉（EarthLink Network Co., Ltd.）。AI会社・AI社員による業務自動化と、人の逐次介入なしに24時間自動開発を回す仕組みを自社で実践しています。開発ノウハウと具体的な設定方法、運用して分かった改善点を公開しています。
 
@@ -76,9 +76,9 @@ Company の org には、2 種類の役割があります。org の中で何が�
 
 ## 3. メールアドレスで招待し、development だけを付ける
 
-dev-b が、Members の + Invite member で dev-c を招待します。email に dev-c のメールアドレス、Org role に Member を選び、Add initial access (optional) に印を付けると、最初の付与を一緒に決められます。デモでは、Target に `acme-shop`、Role に writer、環境は Selected で development だけにしました。
+dev-b が、Members の + Invite member で dev-c を招待します。email に dev-c のメールアドレス、Org role に Member を選び、Add initial access (optional) にチェックを入れると、最初の付与を一緒に決められます。デモでは、Target に `acme-shop`、Role に writer、環境は Selected で development だけにしました。
 
-![Members の画面の切り抜き。上に owner・admin・writer・reader・org_admin・member・guest の説明が並ぶ。その下の Invite a member の欄で、email に dev-c のメールアドレス、Org role は Member、Send invitation と Cancel のボタン。Add initial access (optional) に印があり、Target は acme-shop、Role は writer、環境は Selected で development だけに印（staging・production・qa は空）。](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/dvlt-009/9-2-invite-card.png)
+![Members の画面の切り抜き。上に owner・admin・writer・reader・org_admin・member・guest の説明が並ぶ。その下の Invite a member の欄で、email に dev-c のメールアドレス、Org role は Member、Send invitation と Cancel のボタン。Add initial access (optional) にチェックが入り、Target は acme-shop、Role は writer、環境は Selected で development だけにチェック（staging・production・qa は空）。](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/dvlt-009/9-2-invite-card.png)
 
 Send invitation を押すと、一覧に dev-c の行が Invited で出ます。行の Access には `acme-shop: writer (development)` と、招待で付ける権限が出ます。
 
@@ -141,7 +141,7 @@ CLI でも同じです。dev-d の `dotvault project list` には `acme-shop` �
 
 Members で dev-c の行の Details を押すと、dev-c の詳細が出ます。
 
-![dev-c の詳細の切り抜き。Projects の欄に acme-shop・writer・ENV SCOPE は Selected で development だけに印（staging・production・qa は空）・Remove のボタン。TEAMS (READ-ONLY — EDIT FROM THE TEAMS SCREEN) の欄に backend と「acme-shop: writer (all envs)」。ACCOUNT の欄に Member の選択と Remove from org のボタン。](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/dvlt-009/9-7-member-detail.png)
+![dev-c の詳細の切り抜き。Projects の欄に acme-shop・writer・ENV SCOPE は Selected で development だけにチェック（staging・production・qa は空）・Remove のボタン。TEAMS (READ-ONLY — EDIT FROM THE TEAMS SCREEN) の欄に backend と「acme-shop: writer (all envs)」。ACCOUNT の欄に Member の選択と Remove from org のボタン。](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/dvlt-009/9-7-member-detail.png)
 
 Projects の欄が本人への付与、TEAMS の欄が Team を通した付与です。dev-c は、本人への付与では development だけですが、Team backend を通して `acme-shop` の全部の環境を読めました。⑥ で替える値は、この全部の環境の値です。外すとこの画面ごと無くなるので、先に控えておきます。
 
@@ -197,7 +197,7 @@ Service Tokens の一覧で、All (incl. revoked) を選ぶと、失効した to
 
 ![Service Tokens の一覧の切り抜き。見出しは Name・Token ID・Role・Project・Envs・Created by・Created・Expires・Last used (hourly)・Last-use IP・Status。行は dev-c-laptop・b948c782263624dba9f21c04e2422c6e・Read only・acme-shop・development・dev-c のメールアドレス・Created・Expires・Last used の日時・Last-use IP は塗りつぶし・Status は revoked。](https://raw.githubusercontent.com/EarthLinkNetwork/blog_public/main/images/dvlt-009/9-13-tokens-after-remove.png)
 
-`dev-c-laptop` の Status が revoked（失効）になっています。Created by の列で、誰が作った token かが分かります。
+`dev-c-laptop` の Status が revoked（失効）になっています。Created by の列で、誰が作った token かが分かります。外した人の古い token は、メールアドレスでなく「64782458… (no longer a member)」のように ID で出ることがあります。
 
 Audit Log には、外した時の記録が、同じ秒に 3 行並びます。Metadata の列は表の右の端にあるので、表を横にスクロールして読みます（下の図では下の段）。
 
